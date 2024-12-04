@@ -1,0 +1,16 @@
+{
+    "name": "filimonov/intaintest",
+    "description": "test",
+    "autoload": {
+        "psr-4": {
+            "PostgreSQL\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nikita Filimonov",
+            "email": "filimonovnikitav@gmail.com"
+        }
+    ],
+    "require": {}
+}

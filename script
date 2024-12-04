@@ -1,0 +1,45 @@
+<?php
+
+require 'vendor/autoload.php';
+
+use PostgreSQL\Connection;
+
+try {
+    $pdo=Connection::get()->connect();
+    //echo 'A connection to the PostgreSQL database sever has been established successfully.';
+} catch (\PDOException $e) {
+    echo $e->getMessage();
+}
+
+$jsonPosts = file_get_contents("https://jsonplaceholder.typicode.com/posts");
+$jsonPostsDecode = json_decode($jsonPosts , true); 
+
+$jsonComments = file_get_contents("https://jsonplaceholder.typicode.com/comments");
+$jsonCommentsDecode = json_decode($jsonComments , true);
+
+$postCount = 0;
+foreach ($jsonPostsDecode as $post){
+    $stmt = $pdo->prepare("INSERT INTO posts (userId, id, title, body) 
+        VALUES (:userId, :id, :title,:body)");
+        $stmt->bindParam(":userId", $post["userId"]);
+        $stmt->bindParam(":id", $post["id"]);
+        $stmt->bindParam(":title", $post["title"]);
+        $stmt->bindParam(":body", $post["body"]);
+        $stmt->execute();
+    $postCount++;
+}
+
+$commentCount = 0;
+foreach ($jsonCommentsDecode as $comments){
+    $stmt = $pdo->prepare("INSERT INTO comments (postId, id, name, email, body) 
+        VALUES (:postId, :id, :name, :email, :body)");
+        $stmt->bindParam(":postId", $comments["postId"]);
+        $stmt->bindParam(":id", $comments["id"]);
+        $stmt->bindParam(":name", $comments["name"]);
+        $stmt->bindParam(":email", $comments["email"]);
+        $stmt->bindParam(":body", $comments["body"]);
+        $stmt->execute();
+    $commentCount++;
+}
+
+printf("Загружено %d записей и %d комментариев",  $postCount, $commentCount);
