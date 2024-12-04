@@ -39,14 +39,16 @@ if (isset($_GET['searchInput'])) {
         $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $stmt->closeCursor(); 
     }
-} elseif (isset($_GET['download'])) {
-    //Если нажали на кнопку загрузить данныу
+};
+
+//Если нажали на кнопку загрузить данныу
+if (isset($_POST['download'])) {
     try {
         require (__DIR__. '/../script');
     } catch (Exception $e) {
         // обработка ошибки
         $errors = "Повторная загруска данных невозможна до их удаления ";
     };
-};
+}
 //импорт фронтовой части приложения
 include __DIR__ . "/../templates/index.php";

@@ -16,10 +16,10 @@
     <h1 class="mt-5 mb-3">Поиск записей по тексту коментариев</h1>
     <form method = "GET" action="">
         <input type="hidden" name ="searchInput" value="searchInput">
-        <input type = "text" name ="searchInput" placeholder="Введите,как минимум, 3 символа">
+        <input type = "text" name ="searchInput" placeholder="Минимум 3 символа">
         <button type = "submit">Найти</button>
     </form>
-    <form method = "GET" action="">
+    <form method = "POST" action="">
         <input type="hidden" name ="download" value="download">
         <button type = "submit">Загрузить данные в базу</button>
     </form>
